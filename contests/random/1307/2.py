@@ -8,7 +8,6 @@ class Solution:
             if len(word) > 1:
                 start.add(word[0])
 
-
         n = max(map(len, words + [result]))
         if len(result) < n:
             return False
@@ -23,7 +22,7 @@ class Solution:
                     return dfs(idx + 1, 0, carry, visited, mp)
                 return False
 
-            if (i < len(words) and idx >= len(words[i])):
+            if i < len(words) and idx >= len(words[i]):
                 return dfs(idx, i + 1, carry, visited, mp)
 
             tmp = words + [result]

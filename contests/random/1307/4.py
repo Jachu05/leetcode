@@ -1,5 +1,3 @@
-
-
 class Solution:
     def isSolvable(self, words, result):
         words.append(result)
@@ -26,7 +24,6 @@ class Solution:
                 return rec_wor(word_num + 1, letter_num, count)
 
             letter = word[~letter_num]
-            # sign = -1 if word_num == words_len - 1 else 1
             sign = 1 if word_num < words_len - 1 else -1
 
             if cache[letter] is None:
@@ -46,11 +43,9 @@ class Solution:
 
             return False
 
-
-
-        a = 1
         o = rec_wor(0, 0, 0)
         return o
+
 
 words = ["ABD", "B"]
 result = "CD"
@@ -64,13 +59,13 @@ result = "AA"
 xd = Solution().isSolvable(words, result)
 print(xd)
 
-words = ["SIX","SEVEN","SEVEN"]
+words = ["SIX", "SEVEN", "SEVEN"]
 result = "TWENTY"
 
 xd = Solution().isSolvable(words, result)
 print(xd)
 
-words = ["I","THINK","IT","BE","THINE"]
+words = ["I", "THINK", "IT", "BE", "THINE"]
 result = "INDEED"
 
 xd = Solution().isSolvable(words, result)
@@ -81,27 +76,27 @@ result = "MONEY"
 xd = Solution().isSolvable(words, result)
 print(xd)
 
-words = ["THIS","IS","TOO"]
+words = ["THIS", "IS", "TOO"]
 result = "FUNNY"
 xd = Solution().isSolvable(words, result)
 print(xd)
 
-words = ["LEET","CODE"]
+words = ["LEET", "CODE"]
 result = "POINT"
 xd = Solution().isSolvable(words, result)
 print(xd)
 
-words = ["TO","BE","OR","NOT"]
+words = ["TO", "BE", "OR", "NOT"]
 result = "TOBE"
 xd = Solution().isSolvable(words, result)
 print(xd)
 
-words = ["BUT","ITS","STILL"]
+words = ["BUT", "ITS", "STILL"]
 result = "FUNNY"
 xd = Solution().isSolvable(words, result)
 print(xd)
 
-words = ["HOPE","THIS","HELPS","OTHER"]
+words = ["HOPE", "THIS", "HELPS", "OTHER"]
 result = "PEOPLE"
 xd = Solution().isSolvable(words, result)
 print(xd)
