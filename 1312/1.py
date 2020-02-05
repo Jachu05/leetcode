@@ -9,40 +9,47 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
-        max_rec_d = {}
         s_len = len(s)
+        rev_s = s[::-1]
 
-        def rec_pal(left, right, curr_rec=0):
-            if (left, right) in max_rec_d:
-                return max_rec_d[(left, right)]
+        array = [[0] * (s_len + 1) for x in range(2*s_len)]
 
-            if right - left == 1:
-                return curr_rec
+        for i in range(s_len):
+            for j in range(s_len):
+                s[i:j + 1]
 
-            if s[left] == s[right]:
-                max_rec_d[(left, right)] = curr_rec + 2
-                curr_rec = rec_pal(left + 1, right - 1, curr_rec + 2)
-            else:
-                max_rec_d[(left, right)] = 0
-                curr_rec1 = rec_pal(left + 1, left, 0)
-                curr_rec2 = rec_pal(left, right - 1, 0)
-                curr_rec = max(curr_rec1, curr_rec2)
-
-            return curr_rec
-
-        max_pali = rec_pal(0, s_len - 1, 0)
-
-        pali_letters = s_len // 2
-        mirror_lett = abs(pali_letters - max_pali)
-        to_pali_letters = mirror_lett * 2
-        return to_pali_letters
+        print()
 
 
-s = "mbadm"
-print(Solution().minInsertions(s), 2)
 
+
+# s = "mbadm"
+# print(Solution().minInsertions(s), 2)
+# #
 s = "zzazz"
 print(Solution().minInsertions(s), 0)
+#
+# s = "leetcode"
+# print(Solution().minInsertions(s), 5)
+# #
+# s = "g"
+# print(Solution().minInsertions(s), 0)
+#
+# s = "no"
+# print(Solution().minInsertions(s), 1)
+
+# s = "hbbhhh"
+# print(Solution().minInsertions(s), 2)
+
+s = "hbaabhh"
+print(Solution().minInsertions(s), 1)
+
+s = "hgfedcbaabcdefghh"
+print(Solution().minInsertions(s), 1)
+#
+# s = "tldjbqjdogipebqsohdypcxjqkrqltpgviqtqz"
+# print(Solution().minInsertions(s), 25)
+
 
 string = 'aaaaaaaassddds'
 
