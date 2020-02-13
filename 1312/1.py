@@ -10,15 +10,17 @@ class Solution(object):
         :rtype: int
         """
         s_len = len(s)
-        rev_s = s[::-1]
 
-        array = [[0] * (s_len + 1) for x in range(2*s_len)]
+        array = [[0] * (s_len + 1) for x in range(s_len + 1)]
 
         for i in range(s_len):
             for j in range(s_len):
-                s[i:j + 1]
-
-        print()
+                a = s[i]
+                b = s[~j]
+                array[i + 1][j + 1] = array[i][j] + 1 if s[i] == s[~j] else max(array[i][j + 1], array[i + 1][j])
+                # print()
+        # print()
+        return s_len - array[-1][-1]
 
 
 
@@ -26,8 +28,11 @@ class Solution(object):
 # s = "mbadm"
 # print(Solution().minInsertions(s), 2)
 # #
-s = "zzazz"
-print(Solution().minInsertions(s), 0)
+# s = "zzazz"
+# print(Solution().minInsertions(s), 0)
+
+s = "abdbc"
+print(Solution().minInsertions(s), 2)
 #
 # s = "leetcode"
 # print(Solution().minInsertions(s), 5)
@@ -37,15 +42,15 @@ print(Solution().minInsertions(s), 0)
 #
 # s = "no"
 # print(Solution().minInsertions(s), 1)
-
+#
 # s = "hbbhhh"
 # print(Solution().minInsertions(s), 2)
-
-s = "hbaabhh"
-print(Solution().minInsertions(s), 1)
-
-s = "hgfedcbaabcdefghh"
-print(Solution().minInsertions(s), 1)
+#
+# s = "hbaabhh"
+# print(Solution().minInsertions(s), 1)
+#
+# s = "hgfedcbaabcdefghh"
+# print(Solution().minInsertions(s), 1)
 #
 # s = "tldjbqjdogipebqsohdypcxjqkrqltpgviqtqz"
 # print(Solution().minInsertions(s), 25)
