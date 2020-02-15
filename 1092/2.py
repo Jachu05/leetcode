@@ -1,3 +1,8 @@
+import sys
+
+sys.setrecursionlimit(15000)
+
+
 class Solution(object):
     def shortestCommonSupersequence(self, str1, str2):
         """
@@ -6,60 +11,88 @@ class Solution(object):
         :rtype: str
         """
 
-        c2 = {'min_str': '',
-              'min_min': 10000}
-        cache = {}
+        array = [[0] * (len(str2) + 1) for _ in range(len(str1) + 1)]
 
-        def rec_comp(str1, str2, c):
-            key = (str1, str2)
+        xd = ''
+        lcs = ''
 
-            if key in cache:
-                return cache[key]
-
-            if not str1:
-                return str2
-            elif not str2:
-                return str1
-
-            # c += 1
-            # if c > c2['min_min']:
-            #     return c2['min_str']
-
-            if str1[-1] == str2[-1]:
-                cache[key] = rec_comp(str1[:-1], str2[:-1], c) + str1[-1]
-            else:
-                curr1 = rec_comp(str1, str2[:-1], c) + str2[-1]
-                curr2 = rec_comp(str1[:-1], str2, c) + str1[-1]
-                if len(curr1) < len(curr2):
-                    cache[key] = curr1
+        for i in range(len(str1)):
+            for j in range(len(str2)):
+                if str1[i] == str2[j]:
+                    array[i + 1][j + 1] = array[i][j] + 1
                 else:
-                    cache[key] = curr2
+                    array[i + 1][j + 1] = max(array[i][j + 1], array[i + 1][j])
 
-            c2['min_str'] = cache[key]
-            c2['min_min'] = len(cache[key])
+        n = len(str1)
+        m = len(str2)
+        while array[n][m] != 0:
 
-            return cache[key]
+            if array[n][m] == array[n - 1][m]:
+                xd = str1[n - 1] + xd
+                n -= 1
+            elif array[n][m] == array[n][m - 1]:
+                xd = str2[m - 1] + xd
+                m -= 1
+            else:
+                xd = str1[n - 1] + xd
+                lcs = str1[n - 1] + lcs
+                n -= 1
+                m -= 1
 
-        xd = rec_comp(str1, str2, 0)
+        xd = str1[:n] + xd
+        xd = str2[:m] + xd
+
         return xd
 
-str1 = "ab"
-str2 = "ad"
-print(Solution().shortestCommonSupersequence(str1, str2), 'abad')
 
-str1 = "ab"
-str2 = "c"
-print(Solution().shortestCommonSupersequence(str1, str2), 'abc')
+# str1 = "a"
+# str2 = "b"
+# print(Solution().shortestCommonSupersequence(str1, str2), 'ab')
+# print()
+# #
+# str1 = "ad"
+# str2 = "ab"
+# print(Solution().shortestCommonSupersequence(str1, str2), 'adb')
+# print()
 
 str1 = "abcc"
 str2 = "cab"
 print(Solution().shortestCommonSupersequence(str1, str2), 'cabcc')
-
-str1 = "abac"
-str2 = "cab"
-print(Solution().shortestCommonSupersequence(str1, str2), 'cabac')
-
-str1 = "bbbaaaba"
-str2 = "bbababbb"
+print()
+#
+# str1 = "abc"
+# str2 = "ab"
+# print(Solution().shortestCommonSupersequence(str1, str2), 'abc')
+# print()
+#
+# str1 = "abcd"
+# str2 = "gbhd"
+# print(Solution().shortestCommonSupersequence(str1, str2), 'agbchd')
+# print()
+#
+# str1 = "bbbaaaba"
+# str2 = "bbababbb"
+# asda = 'bbababbaaba'
+# asss = "bbabaaababb"
+# ans = Solution().shortestCommonSupersequence(str1, str2)
+# print(ans, ans == "bbabaaababb", len(ans), len('bbabaaababb'))
+# print(ans)
+# print('bbabaaababb')
+# print()
+#
+# str1 = "asdasdasdasdasdasdasdasdasdasdasdasdasdasdas"
+# str2 = "qweqweqweqweqweqweqweqweqweqweqweqweqweqweqw"
+# print(Solution().shortestCommonSupersequence(str1, str2), 'cabac')
+# print()
+#
+str1 = "bcacaaab"
+str2 = "bbabaccc"
 ans = Solution().shortestCommonSupersequence(str1, str2)
-print(ans, ans == "bbabaaababb")
+print(ans, "bbabacacaaabc")
+print(ans, ans == "bbabacacaaabc", len(ans), len('bbabacacaaabc'))
+print()
+#
+# str1 = "atdznrqfwlfbcqkezrltzyeqvqemikzgghxkzenhtapwrmrovwtpzzsyiwongllqmvptwammerobtgmkpowndejvbuwbporfyroknrjoekdgqqlgzxiisweeegxajqlradgcciavbpgqjzwtdetmtallzyukdztoxysggrqkliixnagwzmassthjecvfzmyonglocmvjnxkcwqqvgrzpsswnigjthtkuawirecfuzrbifgwolpnhcapzxwmfhvpfmqapdxgmddsdlhteugqoyepbztspgojbrmpjmwmhnldunskpvwprzrudbmtwdvgyghgprqcdgqjjbyfsujnnssfqvjhnvcotynidziswpzhkdszbblustoxwtlhkowpatbypvkmajumsxqqunlxxvfezayrolwezfzfyzmmneepwshpemynwzyunsxgjflnqmfghsvwpknqhclhrlmnrljwabwpxomwhuhffpfinhnairblcayygghzqmotwrywqayvvgohmujneqlzurxcpnwdipldofyvfdurbsoxdurlofkqnrjomszjimrxbqzyazakkizojwkuzcacnbdifesoiesmkbyffcxhqgqyhwyubtsrqarqagogrnaxuzyggknksrfdrmnoxrctntngdxxechxrsbyhtlbmzgmcqopyixdomhnmvnsafphpkdgndcscbwyhueytaeodlhlzczmpqqmnilliydwtxtpedbncvsqauopbvygqdtcwehffagxmyoalogetacehnbfxlqhklvxfzmrjqofaesvuzfczeuqegwpcmahhpzodsmpvrvkzxxtsdsxwixiraphjlqawxinlwfspdlscdswtgjpoiixbvmpzilxrnpdvigpccnngxmlzoentslzyjjpkxemyiemoluhqifyonbnizcjrlmuylezdkkztcphlmwhnkdguhelqzjgvjtrzofmtpuhifoqnokonhqtzxmimp"
+# str2 = "xjtuwbmvsdeogmnzorndhmjoqnqjnhmfueifqwleggctttilmfokpgotfykyzdhfafiervrsyuiseumzmymtvsdsowmovagekhevyqhifwevpepgmyhnagjtsciaecswebcuvxoavfgejqrxuvnhvkmolclecqsnsrjmxyokbkesaugbydfsupuqanetgunlqmundxvduqmzidatemaqmzzzfjpgmhyoktbdgpgbmjkhmfjtsxjqbfspedhzrxavhngtnuykpapwluameeqlutkyzyeffmqdsjyklmrxtioawcrvmsthbebdqqrpphncthosljfaeidboyekxezqtzlizqcvvxehrcskstshupglzgmbretpyehtavxegmbtznhpbczdjlzibnouxlxkeiedzoohoxhnhzqqaxdwetyudhyqvdhrggrszqeqkqqnunxqyyagyoptfkolieayokryidtctemtesuhbzczzvhlbbhnufjjocporuzuevofbuevuxhgexmckifntngaohfwqdakyobcooubdvypxjjxeugzdmapyamuwqtnqspsznyszhwqdqjxsmhdlkwkvlkdbjngvdmhvbllqqlcemkqxxdlldcfthjdqkyjrrjqqqpnmmelrwhtyugieuppqqtwychtpjmloxsckhzyitomjzypisxzztdwxhddvtvpleqdwamfnhhkszsfgfcdvakyqmmusdvihobdktesudmgmuaoovskvcapucntotdqxkrovzrtrrfvoczkfexwxujizcfiqflpbuuoyfuoovypstrtrxjuuecpjimbutnvqtiqvesaxrvzyxcwslttrgknbdcvvtkfqfzwudspeposxrfkkeqmdvlpazzjnywxjyaquirqpinaennweuobqvxnomuejansapnsrqivcateqngychblywxtdwntancarldwnloqyywrxrganyehkglbdeyshpodpmdchbcc"
+# print(Solution().shortestCommonSupersequence(str1, str2), 'cabac')
+# print()
