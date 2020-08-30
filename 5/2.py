@@ -6,22 +6,30 @@ class Solution:
         :rtype: str
         """
         cache = {}
-        def rec_pal(s):
-            if s in cache:
-                return cache[s]
+        longest = ''
+        def rec_pal(s, n, m, longest):
+            key = (n, m)
+
+            if key in cache:
+                return cache[key]
+
+            if longest:
+                if len(longest) >= len(s):
+                    return longest
 
             if s != s[::-1]:
-                curr1 = rec_pal(s[:-1])
-                curr2 = rec_pal(s[1:])
+                curr1 = rec_pal(s[:-1], n, m + 1, longest)
+                curr2 = rec_pal(s[1:], n + 1, m, longest)
                 if len(curr1) > len(curr2):
-                    cache[s] = curr1
+                    cache[key] = curr1
                 else:
-                    cache[s] = curr2
+                    cache[key] = curr2
             else:
-                cache[s] = s
-            return cache[s]
+                longest = s
+                cache[key] = s
+            return cache[key]
 
-        return rec_pal(s)
+        return rec_pal(s, 0, 0, longest)
 
 
 s = "babad"
