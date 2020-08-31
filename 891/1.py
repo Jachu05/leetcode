@@ -9,5 +9,5 @@ class Solution:
             pass
 
 
-A = [1,2,2]
+A = [1, 2, 2]
 xd = Solution().sumSubseqWidths(A)
