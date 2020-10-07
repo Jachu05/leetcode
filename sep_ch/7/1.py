@@ -36,6 +36,8 @@ class Solution:
             trav(i, j + 1, path + [(i, j)])
 
         trav(0, 0, [])
+        #try to add to cache in reverse way, paths to current i,j
+        return cache
 
 
 print(Solution().uniquePathsIII(grid=[[1, 0, 0], [0, 0, 0], [0, 0, 2]]))
