@@ -5,19 +5,17 @@ class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
         stack = []
 
-        def is_current_p_can_be_proceeded(current_p: str, max_len: int):
-            counter = 0
-            for elem in current_p:
-                if elem == '(':
-                    counter += 1
-                else:
-                    counter -= 1
-                if counter < 0 or counter > max_len:
-                    return counter, False
+        def is_current_p_can_be_proceeded(i: int, counter: int, current_p: str,  max_len: int):
+            if current_p[i-1::] == '(':
+                counter += 1
+            else:
+                counter -= 1
+            if counter < 0 or counter > max_len:
+                return counter, False
             return counter, True
 
-        def add_parentheses(i: int, current_p: str, max_len: int, all_possible_p: List[str]):
-            counter, f_can_be_proceeded = is_current_p_can_be_proceeded(current_p, max_len)
+        def add_parentheses(i: int, counter: int, current_p: str, max_len: int, all_possible_p: List[str]):
+            counter, f_can_be_proceeded = is_current_p_can_be_proceeded(i, counter, current_p, max_len)
             if not f_can_be_proceeded:
                 return False
 
@@ -26,10 +24,10 @@ class Solution:
                     all_possible_p.append(current_p)
                 return
 
-            add_parentheses(i+1, current_p + '(', max_len, all_possible_p)
-            add_parentheses(i+1, current_p + ')', max_len, all_possible_p)
+            add_parentheses(i+1, counter, current_p + '(', max_len, all_possible_p)
+            add_parentheses(i+1, counter, current_p + ')', max_len, all_possible_p)
 
-        add_parentheses(1, '(', n, stack)
+        add_parentheses(1, 0, '(', n, stack)
         return stack
 
 
